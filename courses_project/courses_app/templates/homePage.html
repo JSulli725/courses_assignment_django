@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+<h4>Add a new course</h4>
+<form action = "/courses/create" method="POST" class="col-md-3">
+    {% csrf_token %}
+    <label for="course_name">Name:</label>
+    <input type="text" name="course_name" class="form-control">
+    <label for="description">Description</label>
+    <input type="text" name="description" class="form-control">
+    <button class="bt btn-primary">Add</button>
+</form>
+<div class="container">
+    <div class="row">
+        <table class = "col-md-12">
+            <tr>
+                <th>Course ID</td>
+                <th>Course Name</th>
+                <th>Description ID</th>
+                <th>Description</td>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.id }}</td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.description.id }}</td>
+                <td>{{ course.description.body }}</td>
+                <td>{{ course.created_at }}</td>
+                <td><a href = "/courses/{{ course.id }}/destroyConfirmation">remove</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% if messages %}   
+{% for message in messages %}    
+<p>{{ message }}</p>
+{% endfor %}
+{% endif %}
+</body>
+</html>
